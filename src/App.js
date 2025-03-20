@@ -1,14 +1,16 @@
 import './App.css';
 import data from './donnees.json';
+import cross from './cross.png';
+import { useState } from "react";
 
-function Body() {
+function Body({ dataState }) {
     return (
         <main>
             <section>
                 <h2>Ma liste de taches</h2>
                 <>
                     <Trierfiltrerboutons />
-                    <Tableautaches />
+                    <Tableautaches data={dataState} />
                 </>
             </section>
         </main>
@@ -24,47 +26,67 @@ function Trierfiltrerboutons() {
     );
 }
 
-function Tache({id}) {
-    const {title, description, date_creation, date_echeance, etat, urgent} = data[id];
+function handleAjouterTache(dataState, setDataState) {
+    const newTache = {
+        id: dataState.taches.length + 1,
+        title: 'Titre',
+        description: 'Description',
+        date_creation: new Date().toISOString().split('T')[0],
+        date_echeance: new Date().toISOString().split('T')[0],
+        etat: 'Nouveau',
+        urgent: false
+    };
+    const updatedData = { ...dataState, taches: [...dataState.taches, newTache] };
+    setDataState(updatedData);
+}
+
+function Tache({ id, data }) {
+    const { title, description, date_creation, date_echeance, etat, urgent } = data.taches.find(tache => tache.id === id);
     return (
-        <article>
-            <h3>{title}</h3>
-            <p>{description}</p>
-            <p>{date_creation}</p>
-            <p>{date_echeance}</p>
-            <select>
-                <option value="NOUVEAU">NOUVEAU</option>
-                <option value="EN ATTENTE">EN ATTENTE</option>
-                <option value="REUSSI">REUSSI</option>
-            </select>
-            <p>{urgent}</p>
+        <article className={'tache'}>
+            <div>
+                <h3>{title}</h3>
+                <p>{description}</p>
+            </div>
+            <div>
+                <p>{date_creation}</p>
+                <p>{date_echeance}</p>
+            </div>
+            <div>
+                <select defaultValue={etat}>
+                    <option value="Nouveau">NOUVEAU</option>
+                    <option value="En attente">EN ATTENTE</option>
+                    <option value="Reussi">REUSSI</option>
+                </select>
+                <p>{urgent ? 'Urgent' : 'Non urgent'}</p>
+            </div>
         </article>
     );
 }
 
-function Tableautaches() {
+function Tableautaches({ data }) {
     return (
         <section className={'Tableautaches'}>
-            <Tache id={0} />
-            <Tache id={1} />
-            <Tache id={2} />
+            {data.taches.map(tache => (
+                <Tache key={tache.id} id={tache.id} data={data} />
+            ))}
         </section>
     );
 }
 
-function Header() {
+function Header({ dataState }) {
     return (
         <header className="App-header">
-            <button>Croix</button>
-            <h1>Taches</h1>
+            <img src={cross} className="App-logo" alt="logo" />
+            <h1>{`${dataState.taches.length} Taches`}</h1>
         </header>
     );
 }
 
-function Footer() {
+function Footer({ dataState, setDataState }) {
     return (
         <footer>
-            <p>Ajouter</p>
+            <p onClick={() => handleAjouterTache(dataState, setDataState)}>Ajouter</p>
             <p>Tache</p>
             <p>Categorie</p>
         </footer>
@@ -72,11 +94,13 @@ function Footer() {
 }
 
 function App() {
+    const [dataState, setDataState] = useState(data);
+
     return (
         <>
-            <Header />
-            <Body />
-            <Footer />
+            <Header dataState={dataState} />
+            <Body dataState={dataState} />
+            <Footer dataState={dataState} setDataState={setDataState} />
         </>
     );
 }

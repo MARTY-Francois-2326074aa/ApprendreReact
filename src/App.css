@@ -34,6 +34,26 @@ footer {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
+.tache div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  margin: 10px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.Tableautaches {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+
 .Trierfiltrerboutons {
   display: flex;
   flex-direction: row;
@@ -58,4 +78,13 @@ main h2 {
   padding: 20px;
   font-size: 1.5em;
   color: #282c34;
+}
+
+.App-logo {
+    height: 18vmin;
+    pointer-events: none;
+}
+
+footer p:hover {
+  color: #61dafb;
 }
