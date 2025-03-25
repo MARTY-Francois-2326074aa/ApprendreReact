@@ -3,24 +3,29 @@ import data from './donnees.json';
 import cross from './cross.png';
 import { useState } from "react";
 
-function Body({ dataState }) {
+
+function Body({ dataState , setDataState }) {
     return (
         <main>
-            <section>
+            <section className={'BodyTaches'}>
                 <h2>Ma liste de taches</h2>
                 <>
-                    <Trierfiltrerboutons />
+                    <Trierfiltrerboutons dataState={dataState} setDataState={setDataState} />
                     <Tableautaches data={dataState} />
                 </>
+            </section>
+            <section className={'BodyCategories'}>
+
             </section>
         </main>
     );
 }
 
-function Trierfiltrerboutons() {
+function Trierfiltrerboutons({ dataState, setDataState }) {
     return (
         <section className={'Trierfiltrerboutons'}>
             <button>Trier</button>
+            <button onClick={() => handleAjouterTache(dataState, setDataState)}>Ajout</button>
             <button>Filtrer</button>
         </section>
     );
@@ -74,6 +79,19 @@ function Tableautaches({ data }) {
     );
 }
 
+function Tabs( nomTab ) {
+    const BodyTaches = document.querySelector('.BodyTaches');
+    const BodyCategories = document.querySelector('.BodyCategories');
+
+    if (nomTab === "Taches") {
+        BodyTaches.classList.remove('hidden');
+        BodyCategories.classList.add('hidden');
+    } else {
+        BodyTaches.classList.add('hidden');
+        BodyCategories.classList.remove('hidden');
+    }
+}
+
 function Header({ dataState }) {
     return (
         <header className="App-header">
@@ -83,12 +101,11 @@ function Header({ dataState }) {
     );
 }
 
-function Footer({ dataState, setDataState }) {
+function Footer() {
     return (
         <footer>
-            <p onClick={() => handleAjouterTache(dataState, setDataState)}>Ajouter</p>
-            <p>Tache</p>
-            <p>Categorie</p>
+            <p onClick={() => Tabs("Taches")}>Liste des taches</p>
+            <p onClick={() => Tabs("Categorie")}>Categorie</p>
         </footer>
     );
 }
@@ -99,8 +116,8 @@ function App() {
     return (
         <>
             <Header dataState={dataState} />
-            <Body dataState={dataState} />
-            <Footer dataState={dataState} setDataState={setDataState} />
+            <Body dataState={dataState} setDataState={setDataState} />
+            <Footer />
         </>
     );
 }

@@ -88,3 +88,7 @@ main h2 {
 footer p:hover {
   color: #61dafb;
 }
+
+.hidden {
+  display: none;
+}
