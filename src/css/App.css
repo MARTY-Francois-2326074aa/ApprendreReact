@@ -1,0 +1,788 @@
+/* 
+ * Styles généraux
+ */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 
+ * Structure principale
+ */
+header {
+  background-color: #282c34;
+  height: 60px; /* Taille fixe identique au footer */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding: 0 20px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+footer {
+  background-color: #282c34;
+  min-height: 60px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding: 0 20px;
+  box-shadow: 0 -2px 5px 0 rgba(0, 0, 0, 0.2);
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+.header-left, .header-right {
+  display: none; /* On masque ces éléments car ils ne sont plus utilisés */
+}
+
+.App-logo {
+  height: 40px; /* Taille réduite pour s'adapter au header */
+  pointer-events: none;
+  margin-right: 15px;
+}
+
+.App-header h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+footer p:hover {
+  color: #61dafb;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: calc(10px + 2vmin);
+  color: #333;
+  background-color: #f0f0f0;
+  align-items: center;
+  width: 100%;
+  overflow-y: auto;
+  height: calc(100vh - 120px); /* Ajuste la hauteur en fonction du header et footer */
+}
+
+main h2 {
+  margin: 0;
+  padding: 20px;
+  font-size: 1.5em;
+  color: #282c34;
+}
+
+.hidden {
+  display: none;
+}
+
+/* 
+ * Styles des tâches
+ */
+.tache {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.tache-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tache-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.tache-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.tache-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+/* Style pour le titre des tâches terminées */
+.titre-termine {
+  text-decoration: line-through;
+  color: #888; /* Couleur plus claire pour indiquer la complétion */
+}
+
+.badge-urgent {
+  background-color: #ff4d4f;
+  color: white;
+  font-size: 0.7em;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.tache-description {
+  color: #666;
+  font-size: 0.9em;
+  margin: 8px 0 16px;
+  line-height: 1.4;
+}
+
+.tache-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8em;
+  color: #777;
+}
+
+.tache-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tache-status select {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  font-size: 0.9em;
+}
+
+.Tableautaches {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.Trierfiltrerboutons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 800px;
+  margin-bottom: 10px;
+}
+
+/* 
+ * Styles des boutons
+ */
+button {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.data-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+}
+
+.data-controls button {
+  padding: 8px 15px;
+  background-color: #4285f4;
+  color: white;
+  font-size: 14px;
+}
+
+.data-controls button:hover {
+  background-color: #3367d6;
+}
+
+.data-controls button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+}
+
+/* 
+ * Styles des popups - Base commune
+ */
+.popup-overlay, .startup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+/* 
+ * Popup de confirmation
+ */
+.confirmation-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+  width: 300px;
+}
+
+.confirmation-dialog p {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.confirmation-buttons button {
+  padding: 8px 20px;
+  font-size: 14px;
+}
+
+.confirmation-buttons button:first-child {
+  background-color: #d93025;
+  color: white;
+}
+
+.confirmation-buttons button:last-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirmation-buttons button:first-child:hover {
+  background-color: #b7261d;
+}
+
+.confirmation-buttons button:last-child:hover {
+  background-color: #e0e0e0;
+}
+
+/* 
+ * Popup de démarrage
+ */
+.startup-popup {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 400px;
+  max-width: 90%;
+}
+
+.startup-popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.startup-popup p {
+  margin-bottom: 25px;
+  font-size: 16px;
+  color: #555;
+}
+
+.startup-popup .popup-buttons {
+  justify-content: center;
+}
+
+.startup-popup button {
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+.popup-buttons button:first-child {
+  background-color: #4285f4;
+  color: white;
+}
+
+.popup-buttons button:last-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.popup-buttons button:first-child:hover {
+  background-color: #3367d6;
+}
+
+.popup-buttons button:last-child:hover {
+  background-color: #e0e0e0;
+}
+
+/* 
+ * Popup d'ajout de tâche
+ */
+.task-popup {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  width: 450px;
+  max-width: 90%;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-popup form {
+  width: 100%;
+}
+
+.task-popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 22px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.task-popup .popup-buttons {
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+/* 
+ * Styles du formulaire
+ */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+  font-size: 16px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-group label {
+  margin-bottom: 0;
+  margin-right: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* 
+ * Boutons du formulaire
+ */
+.btn-save, .btn-cancel {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+.btn-save {
+  background-color: #4285f4;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-save:hover {
+  background-color: #3367d6;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+}
+
+/* 
+ * Styles des menus de tri et filtrage
+ */
+.tri-menu, .filtre-menu, .ajout-menu {
+  position: relative;
+}
+
+.bouton-principal {
+  padding: 8px 16px;
+  background-color: #4285f4;
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Menu déroulant de tri */
+.menu-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  min-width: 180px;
+}
+
+.menu-options button {
+  display: block;
+  width: 100%;
+  padding: 8px 15px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #333;
+}
+
+.menu-options button:hover {
+  background-color: #f0f0f0;
+}
+
+/* Menu de filtres */
+.menu-filtres {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  width: 250px;
+  padding: 15px;
+}
+
+.section-filtre {
+  margin-bottom: 15px;
+}
+
+.section-filtre h4 {
+  font-size: 14px;
+  margin: 0 0 8px 0;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.options-filtre {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.option-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+
+.option-checkbox input {
+  margin-right: 8px;
+}
+
+.actions-filtre {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.btn-appliquer, .btn-reinitialiser {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-appliquer {
+  background-color: #4285f4;
+  color: white;
+}
+
+.btn-reinitialiser {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.message-aucune-tache {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* 
+ * Styles des catégories
+ */
+.categorie {
+  margin: 10px 0;
+  width: 100%;
+}
+
+.categorie-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.categorie-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.categorie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+}
+
+.categorie-header h3 {
+  margin: 0;
+  font-size: 1.2em;
+  color: #333;
+}
+
+.titre-inactif {
+  color: #999;
+  font-style: italic;
+}
+
+.categorie-color-indicator {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+}
+
+.categorie-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.status-label {
+  font-size: 0.9em;
+  color: #777;
+}
+
+/* Toggle switch pour actif/inactif */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #4285f4;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4285f4;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.TableauCategories {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+/* Styles pour la popup d'ajout de catégorie */
+.categorie-popup {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  width: 450px;
+  max-width: 90%;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.categorie-popup form {
+  width: 100%;
+}
+
+.categorie-popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 22px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.color-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker {
+  width: 50px;
+  height: 40px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.color-value {
+  font-family: monospace;
+  color: #555;
+}
+
+.preview-container {
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+.preview-container label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+.categorie-preview {
+  background-color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+}
+
+.message-aucune-categorie {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin: 20px 0;
+}
