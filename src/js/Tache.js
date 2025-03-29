@@ -1,14 +1,11 @@
 export function Tache({ id, data, setDataState }) {
     const { title, description, date_creation, date_echeance, etat, urgent } = data.taches.find(tache => tache.id === id);
-    
-    // Vérifie si la tâche est terminée
+
     const estTerminee = etat === "Reussi";
-    
-    // Gère le changement d'état
+
     const handleChangeEtat = (e) => {
         const nouvelEtat = e.target.value;
-        
-        // Mettre à jour les données
+
         const tachesModifiees = data.taches.map(tache => 
             tache.id === id ? { ...tache, etat: nouvelEtat } : tache
         );

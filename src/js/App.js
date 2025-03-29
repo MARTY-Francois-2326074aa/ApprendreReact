@@ -15,24 +15,20 @@ function App() {
     const [dataState, setDataState] = useState(null);
     const [showPopup, setShowPopup] = useState(true);
 
-    // Afficher la popup au démarrage
     useEffect(() => {
         setShowPopup(true);
     }, []);
 
-    // Charger les données du backup
     const loadBackup = () => {
         setDataState(data);
         setShowPopup(false);
     };
 
-    // Repartir de zéro (aucune donnée)
     const startEmpty = () => {
         setDataState(emptyData);
         setShowPopup(false);
     };
 
-    // Si les données ne sont pas encore choisies, afficher uniquement la popup
     if (dataState === null) {
         return (
             <div className="startup-container">
@@ -54,7 +50,6 @@ function App() {
         );
     }
 
-    // Afficher l'application normale une fois les données chargées
     return (
         <>
             <Header dataState={dataState} />

@@ -1,119 +1,51 @@
-import { useState } from 'react';
-
-// Composant pour le tri des catégories
 export function TriCategories({ dataState, setDataState }) {
-    const [menuOuvert, setMenuOuvert] = useState(false);
-
-    const trierParNom = () => {
-        const triedData = {
+    const handleTri = (type) => {
+        const categoriesTriees = [...dataState.categories].sort((a, b) => {
+            if (type === 'nom') {
+                return a.title.localeCompare(b.title);
+            }
+            return 0;
+        });
+        
+        setDataState({
             ...dataState,
-            categories: [...dataState.categories].sort((a, b) => a.title.localeCompare(b.title))
-        };
-        setDataState(triedData);
-        setMenuOuvert(false);
+            categories: categoriesTriees
+        });
     };
-
+    
     return (
         <div className="tri-menu">
-            <button onClick={() => setMenuOuvert(!menuOuvert)} className="bouton-principal">
-                Trier
+            <button onClick={() => handleTri('nom')} className="bouton-secondaire">
+                Trier par nom
             </button>
-            {menuOuvert && (
-                <div className="menu-options">
-                    <button onClick={trierParNom}>Par nom</button>
-                </div>
-            )}
         </div>
     );
 }
 
-// Composant pour le filtrage des catégories
 export function FiltreCategories({ dataState, setDataState }) {
-    const [menuOuvert, setMenuOuvert] = useState(false);
-    const [filtresActifs, setFiltresActifs] = useState({
-        actif: null // null = tous, true = actifs, false = inactifs
-    });
-
-    const appliquerFiltres = () => {
-        // Filtres combinés sur les catégories
+    const handleFiltre = (type) => {
         let categoriesFiltrees = [...dataState.categories];
         
-        // Filtre par état actif/inactif
-        if (filtresActifs.actif !== null) {
-            categoriesFiltrees = categoriesFiltrees.filter(cat => 
-                cat.actif === filtresActifs.actif
-            );
+        if (type === 'actif') {
+            categoriesFiltrees = categoriesFiltrees.filter(categorie => categorie.actif);
+        } else if (type === 'inactif') {
+            categoriesFiltrees = categoriesFiltrees.filter(categorie => !categorie.actif);
         }
         
-        // Mettre à jour l'affichage avec les catégories filtrées
         setDataState({
             ...dataState,
-            categoriesFiltrees: categoriesFiltrees
+            categories: categoriesFiltrees
         });
-        
-        setMenuOuvert(false);
     };
-
-    const toggleActif = (valeur) => {
-        setFiltresActifs(prev => ({
-            ...prev,
-            actif: prev.actif === valeur ? null : valeur
-        }));
-    };
-
-    const reinitialiserFiltres = () => {
-        setFiltresActifs({
-            actif: null
-        });
-        
-        // Réinitialiser l'affichage
-        setDataState({
-            ...dataState,
-            categoriesFiltrees: undefined
-        });
-        
-        setMenuOuvert(false);
-    };
-
+    
     return (
         <div className="filtre-menu">
-            <button onClick={() => setMenuOuvert(!menuOuvert)} className="bouton-principal">
-                Filtrer
+            <button onClick={() => handleFiltre('actif')} className="bouton-secondaire">
+                Filtrer actifs
             </button>
-            {menuOuvert && (
-                <div className="menu-filtres">
-                    <div className="section-filtre">
-                        <h4>Statut</h4>
-                        <div className="options-filtre">
-                            <label className="option-checkbox">
-                                <input 
-                                    type="checkbox" 
-                                    checked={filtresActifs.actif === true}
-                                    onChange={() => toggleActif(true)}
-                                />
-                                <span>Actives</span>
-                            </label>
-                            <label className="option-checkbox">
-                                <input 
-                                    type="checkbox" 
-                                    checked={filtresActifs.actif === false}
-                                    onChange={() => toggleActif(false)}
-                                />
-                                <span>Inactives</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div className="actions-filtre">
-                        <button onClick={appliquerFiltres} className="btn-appliquer">
-                            Appliquer
-                        </button>
-                        <button onClick={reinitialiserFiltres} className="btn-reinitialiser">
-                            Réinitialiser
-                        </button>
-                    </div>
-                </div>
-            )}
+            <button onClick={() => handleFiltre('inactif')} className="bouton-secondaire">
+                Filtrer inactifs
+            </button>
         </div>
     );
 } 

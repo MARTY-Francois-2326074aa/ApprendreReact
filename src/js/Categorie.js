@@ -1,9 +1,7 @@
 export function Categorie({ id, data, setDataState }) {
     const { title, color, actif } = data.categories.find(categorie => categorie.id === id);
-    
-    // Gère le changement d'état actif/inactif
+
     const handleChangeActif = () => {
-        // Mettre à jour les données
         const categoriesModifiees = data.categories.map(categorie => 
             categorie.id === id ? { ...categorie, actif: !actif } : categorie
         );
